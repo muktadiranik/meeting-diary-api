@@ -60,10 +60,6 @@ class MeetingSerializer(serializers.ModelSerializer):
         )
         for i in validated_data["invited_member"]:
             instance.invited_member.add(i)
-        for i in validated_data["acknowledged_member"]:
-            instance.acknowledged_member.add(i)
-        for i in validated_data["attended_member"]:
-            instance.attended_member.add(i)
         return instance
 
 

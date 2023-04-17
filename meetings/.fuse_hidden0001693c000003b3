@@ -1,6 +1,0 @@
-from celery import shared_task
-
-
-@shared_task(bind=True)
-def check_task(self):
-    print("Hello World")

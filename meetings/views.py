@@ -1,6 +1,7 @@
 from rest_framework.viewsets import ModelViewSet
 from meetings.models import *
 from meetings.serializers import *
+from meetings.tasks import *
 
 # Create your views here.
 

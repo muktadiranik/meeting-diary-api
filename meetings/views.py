@@ -2,12 +2,14 @@ from rest_framework.viewsets import ModelViewSet
 from meetings.models import *
 from meetings.serializers import *
 from meetings.tasks import *
-
+from rest_framework.filters import SearchFilter
 # Create your views here.
 
 
 class DepartmentViewSet(ModelViewSet):
     serializer_class = DepartmentSerializer
+    filter_backends = [SearchFilter]
+    search_fields = ["title", "description"]
 
     def get_queryset(self):
         if self.request.user.is_superuser:
@@ -18,6 +20,10 @@ class DepartmentViewSet(ModelViewSet):
 class MemberViewSet(ModelViewSet):
     queryset = Member.objects.all()
     serializer_class = MemberSerializer
+    filter_backends = [SearchFilter]
+    search_fields = ["full_name", "primary_phone",
+                     "secondary_phone", "email",
+                     "address", "designation"]
 
     def get_queryset(self):
         return Member.objects.filter(department=self.kwargs["department_pk"]).order_by("-id")
@@ -28,6 +34,8 @@ class MemberViewSet(ModelViewSet):
 
 class CommitteeViewSet(ModelViewSet):
     serializer_class = CommitteeSerializer
+    filter_backends = [SearchFilter]
+    search_fields = ["title", "description"]
 
     def get_queryset(self):
         return Committee.objects.filter(department=self.kwargs["department_pk"]).order_by("-id")
@@ -38,6 +46,9 @@ class CommitteeViewSet(ModelViewSet):
 
 class MeetingViewSet(ModelViewSet):
     serializer_class = MeetingSerializer
+    filter_backends = [SearchFilter]
+    search_fields = ["title", "description",
+                     "content", "meeting_time"]
 
     def get_queryset(self):
         return Meeting.objects.filter(department=self.kwargs["department_pk"], committee=self.kwargs["committee_pk"]).order_by("-id")

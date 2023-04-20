@@ -1,3 +1,4 @@
+from rest_framework.serializers import Serializer
 from rest_framework import serializers
 from meetings.models import *
 from meetings.tasks import *
@@ -76,3 +77,34 @@ class DepartmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Department
         fields = '__all__'
+
+
+class SimpleDepartmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Department
+        fields = '__all__'
+
+
+class SimpleCommitteeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Committee
+        fields = '__all__'
+
+
+class SimpleMemberSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Member
+        fields = '__all__'
+
+
+class SimpleMeetingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Meeting
+        fields = '__all__'
+
+
+class SearchSerializer(Serializer):
+    department = SimpleDepartmentSerializer(many=True)
+    committee = SimpleCommitteeSerializer(many=True)
+    member = SimpleMemberSerializer(many=True)
+    meeting = SimpleMeetingSerializer(many=True)

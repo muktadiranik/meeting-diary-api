@@ -1,7 +1,6 @@
 from rest_framework.serializers import Serializer
 from rest_framework import serializers
 from meetings.models import *
-from meetings.tasks import *
 
 
 class MemberSerializer(serializers.ModelSerializer):
@@ -62,10 +61,6 @@ class MeetingSerializer(serializers.ModelSerializer):
         )
         for i in validated_data["invited_member"]:
             instance.invited_member.add(i)
-        email_list = ""
-        for i in validated_data["invited_member"]:
-            email_list += i.email + " "
-        send_invitation_mail_to_invited_members.delay(email_list, instance.id)
         return instance
 
 

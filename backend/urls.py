@@ -25,6 +25,6 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('auth/', include('dj_rest_auth.urls')),
     path('auth/registration/', include('dj_rest_auth.registration.urls')),
-    path('', include('meetings.urls')),
+    path('api/', include('meetings.urls')),
     path('search/', SearchAPIView.as_view()),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

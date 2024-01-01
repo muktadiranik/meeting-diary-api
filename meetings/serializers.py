@@ -59,8 +59,12 @@ class MeetingSerializer(serializers.ModelSerializer):
             content=validated_data["content"],
             meeting_time=validated_data["meeting_time"],
         )
-        for i in validated_data["invited_member"]:
-            instance.invited_member.add(i)
+        if validated_data["invited_member"]:
+            for i in validated_data["invited_member"]:
+                instance.invited_member.add(i)
+        else:
+            for i in Committee.objects.get(pk=self.context["committee_pk"]).member.all():
+                instance.invited_member.add(i)
         return instance
 
 

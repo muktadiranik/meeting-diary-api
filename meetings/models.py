@@ -48,6 +48,15 @@ class Committee(models.Model):
         return str(self.id)
 
 
+class Content(models.Model):
+    content = HTMLField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return str(self.id)
+
+
 class Meeting(models.Model):
     committee = models.ForeignKey(
         Committee, on_delete=models.CASCADE, blank=True, null=True)
@@ -55,7 +64,7 @@ class Meeting(models.Model):
         Department, on_delete=models.CASCADE, blank=True, null=True)
     title = models.CharField(max_length=255, blank=True, null=True)
     description = HTMLField(blank=True, null=True)
-    content = HTMLField(blank=True, null=True)
+    content = models.ManyToManyField(Content, blank=True)
     meeting_time = models.DateTimeField(blank=True, null=True)
     invited_member = models.ManyToManyField(
         Member, related_name='invited_member', blank=True)

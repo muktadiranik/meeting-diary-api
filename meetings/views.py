@@ -188,3 +188,6 @@ class MeetingViewSet(ModelViewSet):
 
     def get_serializer_context(self):
         return {"department_pk": self.kwargs["department_pk"], "committee_pk": self.kwargs["committee_pk"]}
+
+
+# template views
